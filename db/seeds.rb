@@ -8,6 +8,10 @@
 
 require 'random_data'
 
+Post.create!(
+    title: "This is the idempotent record",
+    body: "This is also idempotent")
+
 50.times do
     
     Post.create!(
@@ -15,6 +19,9 @@ require 'random_data'
         body: RandomData.random_paragraph
     )
 end
+
+
+
 
 posts= Post.all
 
@@ -26,6 +33,12 @@ posts= Post.all
         body: RandomData.random_paragraph
     )
 end
+
+
+Post.find_or_create_by!(
+    title: "This is the idempotent record",
+    body: "This is also idempotent")
+    
 
 puts "Seed finished"
 puts "#{Post.count} posts created"
